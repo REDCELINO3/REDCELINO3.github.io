@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Perfect Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .calculator {
+            background-color: #1c1c1e;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.3);
+            width: 320px;
+        }
+        .display {
+            background-color: #1c1c1e;
+            color: #ffffff;
+            font-size: 2rem;
+            text-align: right;
+            padding: 20px 10px;
+            margin-bottom: 20px;
+            border: none;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            overflow-x: auto;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        button {
+            padding: 20px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            user-select: none;
+            transition: opacity 0.1s;
+        }
+        button:active {
+            opacity: 0.7;
+        }
+        .number {
+            background-color: #3a3a3c;
+            color: white;
+        }
+        .operator {
+            background-color: #be0f81;
+            color: white;
+        }
+        .function {
+            background-color: #a5a5a5;
+            color: black;
+        }
+        .equal {
+            background-color: #7e0f92;
+            color: white;
+        }
+        .zero {
+            grid-column: span 2;
+            border-radius: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <!-- The output screen -->
+    <input type="text" class="display" id="screen" value="0" readonly>
+    
+    <!-- The buttons layout -->
+    <div class="buttons">
+        <button class="function" onclick="clearScreen()">AC</button>
+        <button class="function" onclick="press('(')">(</button>
+        <button class="function" onclick="press(')')">)</button>
+        <button class="operator" onclick="press('/')">÷</button>
+
+        <button class="number" onclick="press('7')">7</button>
+        <button class="number" onclick="press('8')">8</button>
+        <button class="number" onclick="press('9')">9</button>
+        <button class="operator" onclick="press('*')">×</button>
+
+        <button class="number" onclick="press('4')">4</button>
+        <button class="number" onclick="press('5')">5</button>
+        <button class="number" onclick="press('6')">6</button>
+        <button class="operator" onclick="press('-')">-</button>
+
+        <button class="number" onclick="press('1')">1</button>
+        <button class="number" onclick="press('2')">2</button>
+        <button class="number" onclick="press('3')">3</button>
+        <button class="operator" onclick="press('+')">+</button>
+
+        <button class="number zero" onclick="press('0')">0</button>
+        <button class="number" onclick="press('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    const screen = document.getElementById('screen');
+    let currentInput = '';
+
+    // Adds numbers or operators to the screen expression
+    function press(value) {
+        if (screen.value === '0' || screen.value === 'tayo nalang?') {
+            currentInput = '';
+        }
+        currentInput += value;
+        screen.value = currentInput;
+    }
+
+    // Clears everything
+    function clearScreen() {
+        currentInput = '';
+        screen.value = '0';
+    }
+
+    // The Magic Core Logic: No matter what the math is, print the greeting.
+    function calculate() {
+        if (currentInput !== '') {
+            screen.value = 'tayo nalang?🌺🌸🌹🌼';
+            currentInput = ''; // Reset input for the next calculation
+        }
+    }
+</script>
+
+</body>
+</html>
