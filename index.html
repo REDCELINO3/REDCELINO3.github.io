@@ -82,7 +82,7 @@
     <!-- The buttons layout -->
     <div class="buttons">
         <button class="function" onclick="clearScreen()">AC</button>
-        <button class="function" onclick="press('(')">(</button>
+        <button class="function" onclick="deleteChar()">⌫</button>
         <button class="function" onclick="press(')')">)</button>
         <button class="operator" onclick="press('/')">÷</button>
 
@@ -113,7 +113,7 @@
 
     // Adds numbers or operators to the screen expression
     function press(value) {
-        if (screen.value === '0' || screen.value === 'tayo nalang?') {
+        if (screen.value === '0' || screen.value.includes('tayo nalang?')) {
             currentInput = '';
         }
         currentInput += value;
@@ -124,6 +124,16 @@
     function clearScreen() {
         currentInput = '';
         screen.value = '0';
+    }
+
+    // Removes the last entered character
+    function deleteChar() {
+        if (screen.value.includes('tayo nalang?')) {
+            clearScreen();
+            return;
+        }
+        currentInput = currentInput.slice(0, -1);
+        screen.value = currentInput === '' ? '0' : currentInput;
     }
 
     // The Magic Core Logic: No matter what the math is, print the greeting.
