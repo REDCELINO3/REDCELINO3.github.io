@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Perfect Calculator</title>
+    <title>The Working Calculator</title>
     <style>
         body {
             display: flex;
@@ -83,7 +83,7 @@
     <div class="buttons">
         <button class="function" onclick="clearScreen()">AC</button>
         <button class="function" onclick="deleteChar()">⌫</button>
-        <button class="function" onclick="press(')')">)</button>
+        <button class="function" onclick="press('(')">(</button>
         <button class="operator" onclick="press('/')">÷</button>
 
         <button class="number" onclick="press('7')">7</button>
@@ -113,7 +113,7 @@
 
     // Adds numbers or operators to the screen expression
     function press(value) {
-        if (screen.value === '0' || screen.value.includes('tayo nalang?')) {
+        if (screen.value === '0' || screen.value === 'Error') {
             currentInput = '';
         }
         currentInput += value;
@@ -126,9 +126,9 @@
         screen.value = '0';
     }
 
-    // Removes the last entered character
+    // Deletes the last character
     function deleteChar() {
-        if (screen.value.includes('tayo nalang?')) {
+        if (screen.value === 'Error') {
             clearScreen();
             return;
         }
@@ -136,11 +136,18 @@
         screen.value = currentInput === '' ? '0' : currentInput;
     }
 
-    // The Magic Core Logic: No matter what the math is, print the greeting.
+    // Evaluates and shows the real mathematical result
     function calculate() {
         if (currentInput !== '') {
-            screen.value = 'Tayo nalang Jill?🌺🌸🌹🌼';
-            currentInput = ''; // Reset input for the next calculation
+            try {
+                // Evaluate the expression safely using Function constructor
+                const result = new Function('return ' + currentInput)();
+                screen.value = result;
+                currentInput = String(result); // Allows continuing calculations with the answer
+            } catch (error) {
+                screen.value = 'Error';
+                currentInput = '';
+            }
         }
     }
 </script>
